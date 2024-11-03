@@ -1,11 +1,15 @@
 package main
-import(
+
+import (
+	"database/sql"
 	"fmt"
 	"log"
-	"database/sql"
+	"os"
+	"strconv"
 
-	_"github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
+
 /*Student Information*/
 type Student struct{
 	ID int
