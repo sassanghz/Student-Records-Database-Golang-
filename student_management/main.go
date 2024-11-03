@@ -59,25 +59,24 @@ func addStudent(db *sql.DB, name, grade string, age int, address, email, major s
 }
 
 /*List all students */
-func listStudents(db *sql.DB){
-	rows, err := db.Query("SELECT id, name, grade FROM students")
-
-	if err != nil{
+func listStudents(db *sql.DB) {
+	rows, err := db.Query("SELECT id, name, grade, age, address, email, major FROM students")
+	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer rows.Close()
 
-	fmt.Println("Students List:")
-	for rows.Next(){
+	fmt.Println("Student List:")
+	for rows.Next() {
 		var student Student
-		if err := rows.Scan(&student.ID, &student.Name, &student.Grade); err != nil{
+		err := rows.Scan(&student.ID, &student.Name, &student.Grade, &student.Age, &student.Address, &student.Email, &student.Major)
+		if err != nil {
 			log.Fatal(err)
 		}
-
-		fmt.Printf("ID: %d, Name: %s, Grade: %s\n", student.ID, student.Name, student.Grade)
+		fmt.Printf("ID: %d, Name: %s, Grade: %s, Age: %d, Address: %s, Email: %s, Major: %s\n", student.ID, student.Name, student.Grade, student.Age, student.Address, student.Email, student.Major)
 	}
 }
+
 
 /*Update student information */
 func updateStudent(db *sql.DB, id int, name, grade string){
