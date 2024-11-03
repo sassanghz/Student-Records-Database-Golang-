@@ -21,11 +21,10 @@ type Student struct {
 	Major   string
 }
 
-
 /*Database for student system*/ 
-func initDB() *sql.DB{
+func initDB() *sql.DB {
 	db, err := sql.Open("sqlite3", "students.db")
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -33,16 +32,21 @@ func initDB() *sql.DB{
 	CREATE TABLE IF NOT EXISTS students (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT NOT NULL,
-		grade TEXT NOT NULL
+		grade TEXT NOT NULL,
+		age INTEGER,
+		address TEXT,
+		email TEXT,
+		major TEXT
 	);`
 
 	_, err = db.Exec(createTableSQL)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	return db
 }
+
 
 /*Add a new student */
 func addStudent(db *sql.DB, name, grade string){
