@@ -49,14 +49,13 @@ func initDB() *sql.DB {
 
 
 /*Add a new student */
-func addStudent(db *sql.DB, name, grade string){
-	insertSQL := `INSERT INTO students (name, grade) VALUES (?, ?)`
-	_, err := db.Exec(insertSQL, name, grade)
-	if err != nil{
+func addStudent(db *sql.DB, name, grade string, age int, address, email, major string) {
+	insertSQL := `INSERT INTO students (name, grade, age, address, email, major) VALUES (?, ?, ?, ?, ?, ?)`
+	_, err := db.Exec(insertSQL, name, grade, age, address, email, major)
+	if err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Printf("Students %s with grade %s added successfully!\n", name, grade)
+	fmt.Printf("Student %s added successfully!\n", name)
 }
 
 /*List all students */
