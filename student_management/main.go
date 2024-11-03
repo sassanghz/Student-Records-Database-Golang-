@@ -11,11 +11,16 @@ import (
 )
 
 /*Student Information*/
-type Student struct{
-	ID int
-	Name string
-	Grade string
+type Student struct {
+	ID      int
+	Name    string
+	Grade   string
+	Age     int
+	Address string
+	Email   string
+	Major   string
 }
+
 
 /*Database for student system*/ 
 func initDB() *sql.DB{
