@@ -102,27 +102,45 @@ func deleteStudent(db *sql.DB, id int){
 }
 
 /*Main*/
-func main(){
+func main() {
 	db := initDB()
 	defer db.Close()
 
-	// Add some students
-	addStudent(db, "Alice", "A")
-	addStudent(db, "Bob", "B+")
-	addStudent(db, "Charlie", "C")
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: go run main.go [add|list|update|delete]")
+		return
+	}
 
-	// List all students
-	listStudents(db)
+	switch os.Args[1] {
+	case "add":
+		if len(os.Args) < 8 {
+			fmt.Println("Usage: go run main.go add <name> <grade> <age> <address> <email> <major>")
+			return
+		}
+		age, _ := strconv.Atoi(os.Args[4])
+		addStudent(db, os.Args[2], os.Args[3], age, os.Args[5], os.Args[6], os.Args[7])
 
-	// Update a student's information
-	updateStudent(db, 2, "Bobby", "A-")
+	case "list":
+		listStudents(db)
 
-	// List all students after update
-	listStudents(db)
+	case "update":
+		if len(os.Args) < 9 {
+			fmt.Println("Usage: go run main.go update <id> <name> <grade> <age> <address> <email> <major>")
+			return
+		}
+		id, _ := strconv.Atoi(os.Args[2])
+		age, _ := strconv.Atoi(os.Args[5])
+		updateStudent(db, id, os.Args[3], os.Args[4], age, os.Args[6], os.Args[7], os.Args[8])
 
-	// Delete a student
-	deleteStudent(db, 1)
+	case "delete":
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: go run main.go delete <id>")
+			return
+		}
+		id, _ := strconv.Atoi(os.Args[2])
+		deleteStudent(db, id)
 
-	// List all students after deletion
-	listStudents(db)
+	default:
+		fmt.Println("Unknown command. Use add, list, update, or delete.")
+	}
 }
