@@ -79,16 +79,15 @@ func listStudents(db *sql.DB) {
 
 
 /*Update student information */
-func updateStudent(db *sql.DB, id int, name, grade string){
-	updateSQL := `UPDATE students SET name = ?, grade = ? WHERE id = ?`
-	_, err := db.Exec(updateSQL, name, grade, id)
-
-	if err != nil{
+func updateStudent(db *sql.DB, id int, name, grade string, age int, address, email, major string) {
+	updateSQL := `UPDATE students SET name = ?, grade = ?, age = ?, address = ?, email = ?, major = ? WHERE id = ?`
+	_, err := db.Exec(updateSQL, name, grade, age, address, email, major, id)
+	if err != nil {
 		log.Fatal(err)
 	}
-
 	fmt.Printf("Student ID %d updated to %s with grade %s.\n", id, name, grade)
 }
+
 
 /*Delete Student*/
 func deleteStudent(db *sql.DB, id int){
